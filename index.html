@@ -527,7 +527,7 @@
 <div class="phone">
 
   <div class="sticky-header">
-  <!-- Status Bar -->
+  <!-- Status Bar (disabled — remove comment tags to re-enable)
   <div class="status-bar">
     <span class="status-time">9:41</span>
     <div class="status-icons">
@@ -550,6 +550,7 @@
       </svg>
     </div>
   </div>
+  -->
 
   <!-- Search -->
   <div class="search-wrap">
@@ -618,6 +619,41 @@
   </div>
   <div class="grid-section">
     <div class="grid" id="grid2"></div>
+    <button class="view-all-btn">View All</button>
+  </div>
+
+  <!-- Hero Banner 2 -->
+  <div class="hero" style="margin-top: 40px;">
+    <img src="images/210249020-1-stripe.avif" alt="">
+    <div class="hero-text">
+      <div class="hero-title">New<br>Arrivals</div>
+      <a class="hero-cta" href="#">Shop Now</a>
+    </div>
+  </div>
+  <div class="grid-section">
+    <div class="hero-carousel">
+      <button class="carousel-arrow carousel-prev hidden" id="hero-prev2">
+        <svg width="12" height="19" viewBox="0 0 10 16" fill="none">
+          <path d="M8.5 1.5L2 8l6.5 6.5" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <div class="hero-carousel-track" id="hero-grid2"></div>
+      <button class="carousel-arrow carousel-next" id="hero-next2">
+        <svg width="12" height="19" viewBox="0 0 10 16" fill="none">
+          <path d="M1.5 1.5L8 8l-6.5 6.5" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+    <button class="view-all-btn">View All</button>
+  </div>
+
+  <!-- Section 3 -->
+  <div class="section-header">
+    <div class="section-label">Trending</div>
+    <div class="section-title">Occasionwear</div>
+  </div>
+  <div class="grid-section">
+    <div class="grid" id="grid3"></div>
     <button class="view-all-btn">View All</button>
   </div>
 
@@ -835,7 +871,46 @@ function updateCarousel() {
 prevBtn.addEventListener('click', () => { if (heroIndex > 0) { heroIndex--; updateCarousel(); } });
 nextBtn.addEventListener('click', () => { if (heroIndex < maxIndex) { heroIndex++; updateCarousel(); } });
 buildGrid(document.getElementById('grid'),  PRODUCTS, '#fff');
-buildGrid(document.getElementById('grid2'), PRODUCTS, '#2D2D2D', '#FFFFFF');
+const PRODUCTS2 = [
+  { src: 'images/210606031-1-cream.avif', saved: false },
+  { src: 'images/209554508-1-softpink.avif',             saved: false },
+  { src: 'images/210282735-1-stripe.avif',            saved: false },
+  { src: 'images/209194028-1-grey.avif',         saved: false },
+];
+buildGrid(document.getElementById('grid2'), PRODUCTS2, '#2D2D2D', '#FFFFFF');
+
+const HERO_PRODUCTS2 = [
+  { src: 'images/210077036-1-pink.avif',         saved: false },
+  { src: 'images/210111316-1-blue.avif',      saved: false },
+  { src: 'images/210372628-1-lightblue.avif',        saved: false },
+  { src: 'images/210151050-4.avif',          saved: false },
+  { src: 'images/210160034-4.avif',          saved: false },
+  { src: 'images/210161655-2.avif',          saved: false },
+];
+
+buildGrid(document.getElementById('hero-grid2'), HERO_PRODUCTS2, '#fff');
+const PRODUCTS3 = [
+  { src: 'images/209664335-2.avif',         saved: false },
+  { src: 'images/210074381-2.avif',      saved: false },
+  { src: 'images/210089180-2.avif',        saved: false },
+  { src: 'images/209919445-2.avif',          saved: false },
+];
+buildGrid(document.getElementById('grid3'), PRODUCTS3, '#fff');
+
+const track2   = document.getElementById('hero-grid2');
+const prevBtn2 = document.getElementById('hero-prev2');
+const nextBtn2 = document.getElementById('hero-next2');
+let heroIndex2 = 0;
+const maxIndex2 = HERO_PRODUCTS2.length - visible;
+
+function updateCarousel2() {
+  track2.style.transform = `translateX(-${heroIndex2 * 50}%)`;
+  prevBtn2.classList.toggle('hidden', heroIndex2 === 0);
+  nextBtn2.classList.toggle('hidden', heroIndex2 >= maxIndex2);
+}
+
+prevBtn2.addEventListener('click', () => { if (heroIndex2 > 0) { heroIndex2--; updateCarousel2(); } });
+nextBtn2.addEventListener('click', () => { if (heroIndex2 < maxIndex2) { heroIndex2++; updateCarousel2(); } });
 
 // Tabs
 const tabsEl = document.querySelector('.tabs');
