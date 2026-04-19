@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=375, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Save Animation</title>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -17,7 +17,8 @@
   }
 
   .phone {
-    width: 375px;
+    width: 100%;
+    max-width: 440px;
     min-height: 100vh;
     background: #fff;
     position: relative;
@@ -28,7 +29,7 @@
     position: sticky;
     bottom: 0;
     z-index: 50;
-    width: 375px;
+    width: 100%;
     padding: 10px 16px 16px;
     background: transparent;
     pointer-events: none;
