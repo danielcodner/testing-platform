@@ -368,6 +368,37 @@
   }
   .product-meta.mix { color: #555; }
 
+  /* ── Add to Board Banner ── */
+  .banner-clip {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 6;
+  }
+  .add-to-board-banner {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(22, 22, 22, 0.88);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 13px 14px;
+    transform: translateY(100%);
+    transition: transform 0.36s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .add-to-board-banner.show {
+    transform: translateY(0);
+  }
+  .add-to-board-banner span {
+    color: #fff;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+  }
+
   /* ── Bottom Nav ── */
   .bottom-nav-wrap {
     position: fixed;
@@ -642,6 +673,16 @@ function buildCard(p) {
   floatHeart.innerHTML = `<svg viewBox="0 0 ${VW} ${VH}" overflow="visible"><path d="${HP_BASE}" fill="#e8003a"/></svg>`;
   imgWrap.appendChild(floatHeart);
 
+  // Add to Board banner (clipped inside image)
+  const bannerClip = document.createElement('div');
+  bannerClip.className = 'banner-clip';
+  const banner = document.createElement('div');
+  banner.className = 'add-to-board-banner';
+  banner.innerHTML = `<svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16 0C17.1046 0 18 0.895431 18 2V16C18 17.1046 17.1046 18 16 18H2C0.895431 18 8.05332e-09 17.1046 0 16V8.39258C0.559562 8.65847 1.16422 8.84361 1.7998 8.93457V16.2012H16.2002V1.80078H8.93555C8.84461 1.16485 8.65862 0.559837 8.39258 0H16Z" fill="white"/><path d="M8.09961 14.4004H3.59961V9H8.09961V14.4004Z" fill="white"/><path d="M14.4004 14.4004H9V4.5H14.4004V14.4004Z" fill="white"/><path d="M8.09961 8.09961H5.94629C6.82784 7.56844 7.56851 6.82789 8.09961 5.94629V8.09961Z" fill="white"/><path fill-rule="evenodd" clip-rule="evenodd" d="M4 0C6.20914 0 8 1.79086 8 4C8 6.20914 6.20914 8 4 8C1.79086 8 0 6.20914 0 4C0 1.79086 1.79086 0 4 0ZM3.2002 3.19922H1.59961V4.79883H3.2002V6.39941H4.7998V4.79883H6.40039V3.19922H4.7998V1.59961H3.2002V3.19922Z" fill="white"/></svg><span>Add to Board</span>`;
+  bannerClip.appendChild(banner);
+  imgWrap.appendChild(bannerClip);
+  let bannerTimer;
+
   const btn = document.createElement('button');
   btn.className = 'heart-btn' + (p.saved ? ' is-saved' : '');
   btn.setAttribute('aria-label', 'Save item');
@@ -716,11 +757,16 @@ function buildCard(p) {
       void floatHeart.offsetWidth;
       floatHeart.classList.add('firing');
       setTimeout(() => floatHeart.classList.remove('firing'), 820);
+      clearTimeout(bannerTimer);
+      banner.classList.add('show');
+      bannerTimer = setTimeout(() => banner.classList.remove('show'), 6000);
     } else {
       btn.dataset.saved = '0';
       btn.classList.add('anim-unsave');
       btn.classList.remove('is-saved');
       setTimeout(() => btn.classList.remove('anim-unsave'), 420);
+      clearTimeout(bannerTimer);
+      banner.classList.remove('show');
     }
   });
 
