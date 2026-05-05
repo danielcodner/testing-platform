@@ -169,11 +169,11 @@
   /* ── Heart Button ── */
   .heart-btn {
     position: absolute;
-    top: 4px;
-    right: 4px;
+    bottom: 10px;
+    right: 10px;
     width: 28px;
     height: 28px;
-    background: none;
+    background: #fff;
     border: none;
     border-radius: 50%;
     cursor: pointer;
@@ -200,7 +200,7 @@
     position: absolute;
     inset: -1px;
     border-radius: 50%;
-    border: 2px solid rgba(232, 0, 58, 0.55);
+    border: 2px solid rgba(45,45,45,0.55);
     opacity: 0;
     pointer-events: none;
     z-index: 1;
@@ -230,15 +230,15 @@
     transition: fill 0.2s, stroke 0.2s;
   }
   .h-fill {
-    fill: #e8003a;
+    fill: #2D2D2D;
     opacity: 0;
     transition: opacity 0.08s;
   }
 
   .heart-btn.is-saved .h-fill { opacity: 1; }
   .heart-btn.is-saved .h-base {
-    fill: #e8003a;
-    stroke: #e8003a;
+    fill: #2D2D2D;
+    stroke: #2D2D2D;
   }
 
   @keyframes spring-save {
@@ -246,8 +246,6 @@
     18%  { transform: scale(1.55); }
     38%  { transform: scale(0.82); }
     58%  { transform: scale(1.25); }
-    74%  { transform: scale(0.93); }
-    88%  { transform: scale(1.07); }
     100% { transform: scale(1); }
   }
   @keyframes spring-unsave {
@@ -258,20 +256,14 @@
     100% { transform: scale(1); }
   }
 
-  .heart-btn.anim-save .heart-inner {
-    animation: spring-save 0.58s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-  }
-  .heart-btn.anim-unsave .heart-inner {
-    animation: spring-unsave 0.38s ease forwards;
-  }
+  .heart-btn.anim-save .heart-inner { animation: spring-save 0.68s cubic-bezier(0.34,1.10,0.64,1) forwards; }
+  .heart-btn.anim-unsave .heart-inner { animation: spring-unsave 0.38s ease forwards; }
 
   @keyframes glow-expand {
     0%   { transform: scale(1); opacity: 0.85; }
     100% { transform: scale(3.0); opacity: 0; }
   }
-  .heart-btn.anim-save .glow-ring {
-    animation: glow-expand 0.52s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.06s forwards;
-  }
+  .heart-btn.anim-save .glow-ring { animation: none; }
 
   @keyframes flash-in {
     0%   { background: rgba(255,255,255,0); }
@@ -324,7 +316,7 @@
     transform: translateY(0) scale(0.5);
   }
   .float-heart svg { width: 100%; height: 100%; }
-  .float-heart svg path { fill: #e8003a; }
+  .float-heart svg path { fill: #2D2D2D; }
 
   @keyframes float-up {
     0%   { opacity: 0; transform: translateY(0) scale(0.4); }
@@ -533,16 +525,7 @@
 const HP_BASE = "M15.5566 7C16.6256 6.99878 17.4753 7.35601 18.0527 7.91895C18.6275 8.47937 18.9986 9.30743 19 10.376C19.0037 12.9324 17.3015 15.0827 15.376 16.6768C14.4328 17.4575 13.4836 18.0646 12.7676 18.4766C12.4661 18.65 12.2068 18.7863 12.0107 18.8867C11.8145 18.7863 11.5555 18.6499 11.2539 18.4766C10.5369 18.0645 9.58684 17.4569 8.6416 16.6758C6.77201 15.1308 5.10979 13.0643 5.00488 10.6123L5 10.374C4.99911 9.30746 5.36988 8.48417 5.94434 7.92676C6.52222 7.36615 7.37382 7.00999 8.44531 7.00879C8.85041 7.00829 9.33894 7.14795 9.85547 7.41406C10.3608 7.67445 10.8344 8.02639 11.2002 8.37207H11.2012L11.2998 8.46777L11.998 9.14551L12.6953 8.46582L12.791 8.37207L12.79 8.37109C13.1539 8.02509 13.631 7.6727 14.1396 7.41016C14.5946 7.17537 15.0277 7.03783 15.4004 7.00684L15.5566 7Z";
 const VW = 24, VH = 24;
 
-const PARTICLES = [
-  { tx:-22, ty:-22, c:'#e8003a', sz:4.5, r:'40deg',  d:0   },
-  { tx:  0, ty:-28, c:'#ff6b9d', sz:3.5, r:'-20deg', d:30  },
-  { tx: 22, ty:-22, c:'#e8003a', sz:4.5, r:'60deg',  d:15  },
-  { tx: 26, ty:  0, c:'#ffadc8', sz:3,   r:'80deg',  d:0   },
-  { tx: 20, ty: 20, c:'#e8003a', sz:3.5, r:'100deg', d:20  },
-  { tx:  0, ty: 26, c:'#ff6b9d', sz:4.5, r:'-40deg', d:10  },
-  { tx:-20, ty: 20, c:'#e8003a', sz:3.5, r:'140deg', d:25  },
-  { tx:-26, ty:  0, c:'#ffadc8', sz:3,   r:'-80deg', d:5   },
-];
+const PARTICLES = [];
 
 const PRODUCTS = [
   {
@@ -670,7 +653,7 @@ function buildCard(p) {
 
   const floatHeart = document.createElement('div');
   floatHeart.className = 'float-heart';
-  floatHeart.innerHTML = `<svg viewBox="0 0 ${VW} ${VH}" overflow="visible"><path d="${HP_BASE}" fill="#e8003a"/></svg>`;
+  floatHeart.innerHTML = `<svg viewBox="0 0 ${VW} ${VH}" overflow="visible"><path d="${HP_BASE}" fill="#2D2D2D"/></svg>`;
   imgWrap.appendChild(floatHeart);
 
   // Add to Board banner (clipped inside image)
@@ -753,10 +736,6 @@ function buildCard(p) {
       btn.classList.add('anim-save');
       setTimeout(() => btn.classList.add('is-saved'), 55);
       setTimeout(() => btn.classList.remove('anim-save'), 660);
-      floatHeart.classList.remove('firing');
-      void floatHeart.offsetWidth;
-      floatHeart.classList.add('firing');
-      setTimeout(() => floatHeart.classList.remove('firing'), 820);
       clearTimeout(bannerTimer);
       banner.classList.add('show');
       bannerTimer = setTimeout(() => banner.classList.remove('show'), 6000);

@@ -318,12 +318,13 @@
   /* ── Heart Button ── */
   .heart-btn {
     position: absolute;
-    top: 10px;
+    bottom: 10px;
     right: 10px;
     width: 28px;
-    height: 26px;
-    background: none;
+    height: 28px;
+    background: #fff;
     border: none;
+    border-radius: 50%;
     cursor: pointer;
     padding: 0;
     outline: none;
@@ -337,25 +338,23 @@
 
   .heart-inner {
     position: relative;
-    width: 28px;
-    height: 26px;
+    width: 32px;
+    height: 28px;
     display: flex;
     align-items: center;
     justify-content: center;
   }
 
-  /* Glow ring — now heart-shaped, sits behind svg */
   .glow-ring {
     position: absolute;
     inset: -1px;
     border-radius: 50%;
-    border: 2px solid rgba(232, 0, 58, 0.55);
+    border: 2px solid rgba(45,45,45,0.55);
     opacity: 0;
     pointer-events: none;
     z-index: 1;
   }
 
-  /* White flash */
   .flash-ring {
     position: absolute;
     inset: 0;
@@ -365,101 +364,65 @@
     z-index: 2;
   }
 
-  /* Heart SVG */
   .heart-svg {
-    width: 28px;
-    height: 26px;
+    width: 32px;
+    height: 28px;
     overflow: visible;
     position: relative;
     z-index: 3;
   }
 
-  /* Dark semi-transparent base (unsaved state) */
   .h-base {
-    fill: #2D2D2D;
-    fill-opacity: 0.4;
-    transition: fill 0.2s, fill-opacity 0.2s;
-  }
-  /* White stroke outline */
-  .h-stroke {
-    fill: none;
-    stroke: #fff;
+    fill: #fff;
+    stroke: #2D2D2D;
     stroke-width: 2;
-    transition: stroke 0.2s, opacity 0.2s;
+    transition: fill 0.2s, stroke 0.2s;
   }
-  /* Red fill — clipped, rises up on save */
-  .h-fill {
-    fill: #e8003a;
-    opacity: 0;
-    transition: opacity 0.08s;
-  }
+  .h-fill { fill: #2D2D2D; opacity: 0; transition: opacity 0.08s; }
 
-  /* ── Saved state ── */
   .heart-btn.is-saved .h-fill { opacity: 1; }
-  .heart-btn.is-saved .h-base { fill: #e8003a; fill-opacity: 1; }
-  .heart-btn.is-saved .h-stroke { opacity: 0; }
+  .heart-btn.is-saved .h-base { fill: #2D2D2D; stroke: #2D2D2D; }
 
-  /* ── Animation: Spring scale on inner ── */
   @keyframes spring-save {
     0%   { transform: scale(1); }
-    18%  { transform: scale(1.5); }
-    38%  { transform: scale(0.85); }
-    58%  { transform: scale(1.22); }
-    74%  { transform: scale(0.94); }
-    88%  { transform: scale(1.06); }
+    18%  { transform: scale(1.55); }
+    38%  { transform: scale(0.82); }
+    58%  { transform: scale(1.25); }
     100% { transform: scale(1); }
   }
   @keyframes spring-unsave {
     0%   { transform: scale(1); }
-    25%  { transform: scale(0.72); }
-    55%  { transform: scale(1.08); }
+    25%  { transform: scale(0.70); }
+    55%  { transform: scale(1.09); }
     78%  { transform: scale(0.97); }
     100% { transform: scale(1); }
   }
 
-  .heart-btn.anim-save .heart-inner {
-    animation: spring-save 0.56s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-  }
-  .heart-btn.anim-unsave .heart-inner {
-    animation: spring-unsave 0.38s ease forwards;
-  }
+  .heart-btn.anim-save .heart-inner { animation: spring-save 0.68s cubic-bezier(0.34,1.10,0.64,1) forwards; }
+  .heart-btn.anim-unsave .heart-inner { animation: spring-unsave 0.38s ease forwards; }
 
-  /* ── Glow ring animation ── */
   @keyframes glow-expand {
     0%   { transform: scale(1); opacity: 0.85; }
-    100% { transform: scale(2.6); opacity: 0; }
+    100% { transform: scale(3.0); opacity: 0; }
   }
-  .heart-btn.anim-save .glow-ring {
-    animation: glow-expand 0.52s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.06s forwards;
-  }
+  .heart-btn.anim-save .glow-ring { animation: none; }
 
-  /* ── Flash animation ── */
   @keyframes flash-in {
     0%   { background: rgba(255,255,255,0); }
-    25%  { background: rgba(255,255,255,0.4); }
+    25%  { background: rgba(255,255,255,0.45); }
     100% { background: rgba(255,255,255,0); }
   }
-  .heart-btn.anim-save .flash-ring {
-    animation: flash-in 0.3s ease forwards;
-  }
+  .heart-btn.anim-save .flash-ring { animation: flash-in 0.3s ease forwards; }
 
-  /* ── Fill clip (liquid rise) — rect covers heart area 4,4→24,22 ── */
-  .h-clip-rect {
-    transform: translateY(22px);
-    transition: none;
-  }
-  .heart-btn.is-saved .h-clip-rect {
-    transform: translateY(0px);
-    transition: transform 0.44s cubic-bezier(0.22, 1, 0.36, 1) 0.05s;
-  }
+  .h-clip-rect { transform: translateY(14px); transition: none; }
+  .heart-btn.is-saved .h-clip-rect { transform: translateY(0px); transition: transform 0.44s cubic-bezier(0.22,1,0.36,1) 0.05s; }
 
   /* ── Particles ── */
   .particle {
     position: absolute;
-    top: 50%;
-    left: 50%;
+    top: 50%; left: 50%;
     border-radius: 50%;
-    transform: translate(-50%, -50%) scale(0);
+    transform: translate(-50%,-50%) scale(0);
     opacity: 0;
     pointer-events: none;
     z-index: 20;
@@ -467,26 +430,22 @@
   @keyframes ptcl {
     0%   { transform: translate(-50%,-50%) scale(0); opacity: 1; }
     35%  { opacity: 1; }
-    100% { transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(1) rotate(var(--r)); opacity: 0; }
+    100% { transform: translate(calc(-50% + var(--tx)),calc(-50% + var(--ty))) scale(1) rotate(var(--r)); opacity: 0; }
   }
-  .heart-btn.anim-save .particle {
-    animation: ptcl 0.58s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-  }
+  .heart-btn.anim-save .particle { animation: ptcl 0.58s cubic-bezier(0.22,1,0.36,1) forwards; }
 
-  /* ── Floating heart ── */
+  /* ── Floating Heart ── */
   .float-heart {
     position: absolute;
-    top: 10px;
-    right: 10px;
-    width: 20px;
-    height: 20px;
+    top: 10px; right: 10px;
+    width: 20px; height: 20px;
     pointer-events: none;
     opacity: 0;
     z-index: 30;
     transform: translateY(0) scale(0.5);
   }
   .float-heart svg { width: 100%; height: 100%; }
-  .float-heart svg path { fill: #e8003a; }
+  .float-heart svg path { fill: #2D2D2D; }
 
   @keyframes float-up {
     0%   { opacity: 0; transform: translateY(0) scale(0.4); }
@@ -494,33 +453,57 @@
     70%  { opacity: 0.7; transform: translateY(-34px) scale(0.85); }
     100% { opacity: 0; transform: translateY(-52px) scale(0.6); }
   }
-  .float-heart.firing {
-    animation: float-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-    animation-delay: 0.08s;
-  }
+  .float-heart.firing { animation: float-up 0.7s cubic-bezier(0.22,1,0.36,1) forwards; animation-delay: 0.08s; }
 
-  /* ── Saved toast ── */
-  .saved-toast {
-    position: fixed;
-    bottom: 32px;
-    left: 50%;
-    transform: translateX(-50%) translateY(60px);
-    background: #111;
-    color: #fff;
-    font-size: 12.5px;
-    font-weight: 600;
-    letter-spacing: 0.04em;
-    padding: 10px 18px;
-    border-radius: 999px;
-    white-space: nowrap;
+  /* ── Add to Board Banner ── */
+  .banner-clip {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
     pointer-events: none;
-    opacity: 0;
-    z-index: 100;
-    transition: transform 0.32s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.25s ease;
+    z-index: 6;
   }
-  .saved-toast.show {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
+  .add-to-board-banner {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    background: rgba(22,22,22,0.88);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 13px 14px;
+    transform: translateY(100%);
+    transition: transform 0.36s cubic-bezier(0.22,1,0.36,1);
+  }
+  .add-to-board-banner.show { transform: translateY(0); }
+  .add-to-board-banner span { color: #fff; font-size: 14px; font-weight: 500; letter-spacing: 0.03em; }
+
+  /* ── Trending Category Carousel ── */
+  .trending-cat-section { padding-bottom: 0px; }
+  .trending-cat-track {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .trending-cat-track::-webkit-scrollbar { display: none; }
+  .trending-cat-card {
+    flex: 0 0 48%;
+    scroll-snap-align: start;
+  }
+  .trending-cat-card img {
+    width: 98%;
+    aspect-ratio: 2/3;
+    object-fit: cover;
+    display: block;
+  }
+  .trending-cat-label {
+    padding: 10px 16px 4px;
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    color: #111;
+    text-transform: uppercase;
   }
 </style>
 </head>
@@ -584,6 +567,12 @@
       <a class="hero-cta" href="listing.html">Shop Now</a>
     </div>
   </div>
+
+  <!-- 2-card row between hero and carousel -->
+  <div class="grid-section">
+    <div class="grid" id="grid-hero-row"></div>
+  </div>
+
   <div class="grid-section">
     <div class="hero-carousel">
       <button class="carousel-arrow carousel-prev hidden" id="hero-prev">
@@ -598,7 +587,16 @@
         </svg>
       </button>
     </div>
-    <button class="view-all-btn" onclick="window.location.href='new-in.html'">View All</button>
+    <button class="view-all-btn" onclick="window.location.href='listing.html'">View All</button>
+  </div>
+
+  <!-- Trending Category Carousel -->
+  <div class="trending-cat-section">
+    <div class="section-header">
+      <div class="section-label">Trending</div>
+      <div class="section-title">Categories</div>
+    </div>
+    <div class="trending-cat-track" id="trending-cat-track"></div>
   </div>
 
   <!-- Header -->
@@ -616,7 +614,7 @@
   <!-- Section 2 -->
   <div class="section-header">
     <div class="section-label">Trending</div>
-    <div class="section-title">Occasionwear</div>
+    <div class="section-title">Polka Dot</div>
   </div>
   <div class="grid-section">
     <div class="grid" id="grid2"></div>
@@ -681,50 +679,26 @@
 
 </div>
 
-<!-- Toast -->
-<div class="saved-toast" id="toast">Saved to Wishlist</div>
-
 <script>
-// Exact paths from heart-icon.svg (viewBox 0 0 28 26)
-const HP_BASE   = "M13.9956 6.25L14.115 6.13003C15.1855 5.07852 16.8975 4.00109 18.4444 4C21.6904 3.99618 23.9959 6.25354 24 9.625C24.0108 17.3735 14.0288 22 14.0144 22C14 22 4.00931 17.3715 4 9.625C3.99719 6.25377 6.31048 4.01439 9.55556 4.0108C11.1026 4.00885 12.8005 5.08041 13.8726 6.12722L13.9956 6.25Z";
-const HP_STROKE = "M14.4053 21.0791C14.4077 21.0801 14.4096 21.0814 14.4111 21.082C14.4098 21.0814 14.4081 21.0809 14.4062 21.0801C14.4044 21.0792 14.4025 21.0782 14.4004 21.0771C14.4027 21.0781 14.4044 21.0787 14.4053 21.0791ZM18.4453 5C19.8303 4.99837 20.9538 5.47521 21.7295 6.25293C22.5048 7.03036 22.9982 8.17401 23 9.62598C23.0048 13.0555 20.7894 15.8954 18.3682 17.957C17.1752 18.9728 15.9764 19.7605 15.0732 20.2949C14.6369 20.5531 14.2716 20.7501 14.0137 20.8838C13.7555 20.75 13.3906 20.553 12.9541 20.2949C12.0496 19.7602 10.849 18.9713 9.65332 17.9551C7.30274 15.9572 5.14315 13.2297 5.00684 9.94336L5 9.62402C4.99882 8.17412 5.49153 7.03626 6.2666 6.2627C7.04291 5.48803 8.16897 5.01229 9.55664 5.01074C10.1104 5.01005 10.7572 5.20625 11.4238 5.55957C12.0003 5.86513 12.5441 6.26342 12.9893 6.66895L13.1738 6.84277L13.2891 6.95801L13.998 7.66504L14.7041 6.95605L14.8154 6.84375C15.2883 6.37928 15.9077 5.90649 16.5703 5.55469C17.1572 5.2431 17.7286 5.05272 18.2334 5.00977L18.4453 5Z";
-const VW = 28, VH = 26;
+const HP_BASE = "M15.5566 7C16.6256 6.99878 17.4753 7.35601 18.0527 7.91895C18.6275 8.47937 18.9986 9.30743 19 10.376C19.0037 12.9324 17.3015 15.0827 15.376 16.6768C14.4328 17.4575 13.4836 18.0646 12.7676 18.4766C12.4661 18.65 12.2068 18.7863 12.0107 18.8867C11.8145 18.7863 11.5555 18.6499 11.2539 18.4766C10.5369 18.0645 9.58684 17.4569 8.6416 16.6758C6.77201 15.1308 5.10979 13.0643 5.00488 10.6123L5 10.374C4.99911 9.30746 5.36988 8.48417 5.94434 7.92676C6.52222 7.36615 7.37382 7.00999 8.44531 7.00879C8.85041 7.00829 9.33894 7.14795 9.85547 7.41406C10.3608 7.67445 10.8344 8.02639 11.2002 8.37207H11.2012L11.2998 8.46777L11.998 9.14551L12.6953 8.46582L12.791 8.37207L12.79 8.37109C13.1539 8.02509 13.631 7.6727 14.1396 7.41016C14.5946 7.17537 15.0277 7.03783 15.4004 7.00684L15.5566 7Z";
+const VW = 24, VH = 24;
 
 const PRODUCTS = [
   { src: 'images/210606031-1-cream.avif',   saved: false },
   { src: 'images/209554508-1-softpink.avif', saved: false },
-  { src: 'images/210282735-1-stripe.avif',  saved: false },
-  { src: 'images/209194028-1-grey.avif',   saved: false },
+  { src: 'images/210049896-2.avif',  saved: false },
+  { src: 'images/210605968-2.avif',   saved: false },
 ];
 
-// 8 particles: (tx, ty, color, shape, size, delay)
-const PARTICLES = [
-  { tx:-24, ty:-24, c:'#e8003a', sz:5,  r:'40deg',  d:0    },
-  { tx:  0, ty:-30, c:'#ff6b9d', sz:4,  r:'-20deg', d:30   },
-  { tx: 24, ty:-24, c:'#e8003a', sz:5,  r:'60deg',  d:15   },
-  { tx: 28, ty:  0, c:'#ffadc8', sz:3.5,r:'80deg',  d:0    },
-  { tx: 22, ty: 22, c:'#e8003a', sz:4,  r:'100deg', d:20   },
-  { tx:  0, ty: 28, c:'#ff6b9d', sz:5,  r:'-40deg', d:10   },
-  { tx:-22, ty: 22, c:'#e8003a', sz:4,  r:'140deg', d:25   },
-  { tx:-28, ty:  0, c:'#ffadc8', sz:3.5,r:'-80deg', d:5    },
-];
+const PARTICLES = [];
 
-const toast = document.getElementById('toast');
-let toastTimer;
 let cardCounter = 0;
 
-function showToast(msg) {
-  clearTimeout(toastTimer);
-  toast.textContent = msg;
-  toast.classList.add('show');
-  toastTimer = setTimeout(() => toast.classList.remove('show'), 2000);
-}
-
-function buildGrid(gridEl, products, strokeColor, baseFill) {
+function buildGrid(gridEl, products) {
   const svgNS = 'http://www.w3.org/2000/svg';
 
   products.forEach((p) => {
-    const uid = cardCounter++;
+    const id = cardCounter++;
     const card = document.createElement('div');
     card.className = 'card';
 
@@ -736,8 +710,17 @@ function buildGrid(gridEl, products, strokeColor, baseFill) {
 
     const floatHeart = document.createElement('div');
     floatHeart.className = 'float-heart';
-    floatHeart.innerHTML = `<svg viewBox="0 0 ${VW} ${VH}" overflow="visible"><path d="${HP_BASE}" fill="#e8003a"/></svg>`;
+    floatHeart.innerHTML = `<svg viewBox="0 0 ${VW} ${VH}" overflow="visible"><path d="${HP_BASE}" fill="#2D2D2D"/></svg>`;
     card.appendChild(floatHeart);
+
+    const bannerClip = document.createElement('div');
+    bannerClip.className = 'banner-clip';
+    const banner = document.createElement('div');
+    banner.className = 'add-to-board-banner';
+    banner.innerHTML = `<svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16 0C17.1046 0 18 0.895431 18 2V16C18 17.1046 17.1046 18 16 18H2C0.895431 18 8.05332e-09 17.1046 0 16V8.39258C0.559562 8.65847 1.16422 8.84361 1.7998 8.93457V16.2012H16.2002V1.80078H8.93555C8.84461 1.16485 8.65862 0.559837 8.39258 0H16Z" fill="white"/><path d="M8.09961 14.4004H3.59961V9H8.09961V14.4004Z" fill="white"/><path d="M14.4004 14.4004H9V4.5H14.4004V14.4004Z" fill="white"/><path d="M8.09961 8.09961H5.94629C6.82784 7.56844 7.56851 6.82789 8.09961 5.94629V8.09961Z" fill="white"/><path fill-rule="evenodd" clip-rule="evenodd" d="M4 0C6.20914 0 8 1.79086 8 4C8 6.20914 6.20914 8 4 8C1.79086 8 0 6.20914 0 4C0 1.79086 1.79086 0 4 0ZM3.2002 3.19922H1.59961V4.79883H3.2002V6.39941H4.7998V4.79883H6.40039V3.19922H4.7998V1.59961H3.2002V3.19922Z" fill="white"/></svg><span>Add to Board</span>`;
+    bannerClip.appendChild(banner);
+    card.appendChild(bannerClip);
+    let bannerTimer;
 
     const btn = document.createElement('button');
     btn.className = 'heart-btn' + (p.saved ? ' is-saved' : '');
@@ -761,52 +744,27 @@ function buildGrid(gridEl, products, strokeColor, baseFill) {
 
     const svg = document.createElementNS(svgNS, 'svg');
     svg.setAttribute('viewBox', `0 0 ${VW} ${VH}`);
-    svg.setAttribute('width', VW);
-    svg.setAttribute('height', VH);
-    svg.setAttribute('class', 'heart-svg');
-    svg.setAttribute('overflow', 'visible');
+    svg.setAttribute('width', '32'); svg.setAttribute('height', '28');
+    svg.setAttribute('class', 'heart-svg'); svg.setAttribute('overflow', 'visible');
 
     const defs = document.createElementNS(svgNS, 'defs');
-    defs.innerHTML = `
-      <filter id="hf-${uid}" x="-16" y="-16" width="60" height="58" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-        <feFlood flood-opacity="0" result="BackgroundImageFix"/>
-        <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-        <feOffset/><feGaussianBlur stdDeviation="2"/>
-        <feComposite in2="hardAlpha" operator="out"/>
-        <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
-        <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow"/>
-        <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape"/>
-      </filter>
-      <clipPath id="hc-${uid}">
-        <rect class="h-clip-rect" x="3" y="3" width="22" height="21"/>
-      </clipPath>
-    `;
+    defs.innerHTML = `<clipPath id="hc-${id}"><rect class="h-clip-rect" x="4" y="6" width="16" height="14"/></clipPath>`;
     svg.appendChild(defs);
 
     const g = document.createElementNS(svgNS, 'g');
-    g.setAttribute('filter', `url(#hf-${uid})`);
 
     const basePath = document.createElementNS(svgNS, 'path');
     basePath.setAttribute('d', HP_BASE);
-    basePath.setAttribute('fill-rule', 'evenodd');
-    basePath.setAttribute('clip-rule', 'evenodd');
+    basePath.setAttribute('fill-rule', 'evenodd'); basePath.setAttribute('clip-rule', 'evenodd');
     basePath.setAttribute('class', 'h-base');
-    if (baseFill) basePath.style.fill = baseFill;
     g.appendChild(basePath);
 
     const fillPath = document.createElementNS(svgNS, 'path');
     fillPath.setAttribute('d', HP_BASE);
-    fillPath.setAttribute('fill-rule', 'evenodd');
-    fillPath.setAttribute('clip-rule', 'evenodd');
+    fillPath.setAttribute('fill-rule', 'evenodd'); fillPath.setAttribute('clip-rule', 'evenodd');
     fillPath.setAttribute('class', 'h-fill');
-    fillPath.style.clipPath = `url(#hc-${uid})`;
+    fillPath.style.clipPath = `url(#hc-${id})`;
     g.appendChild(fillPath);
-
-    const strokePath = document.createElementNS(svgNS, 'path');
-    strokePath.setAttribute('d', HP_STROKE);
-    strokePath.setAttribute('class', 'h-stroke');
-    strokePath.style.stroke = strokeColor;
-    g.appendChild(strokePath);
 
     svg.appendChild(g);
 
@@ -825,16 +783,17 @@ function buildGrid(gridEl, products, strokeColor, baseFill) {
         btn.dataset.saved = '1';
         btn.classList.add('anim-save');
         setTimeout(() => btn.classList.add('is-saved'), 55);
-        setTimeout(() => btn.classList.remove('anim-save'), 650);
-        floatHeart.classList.remove('firing');
-        void floatHeart.offsetWidth;
-        floatHeart.classList.add('firing');
-        setTimeout(() => floatHeart.classList.remove('firing'), 800);
-        } else {
+        setTimeout(() => btn.classList.remove('anim-save'), 660);
+        clearTimeout(bannerTimer);
+        banner.classList.add('show');
+        bannerTimer = setTimeout(() => banner.classList.remove('show'), 6000);
+      } else {
         btn.dataset.saved = '0';
         btn.classList.add('anim-unsave');
         btn.classList.remove('is-saved');
         setTimeout(() => btn.classList.remove('anim-unsave'), 420);
+        clearTimeout(bannerTimer);
+        banner.classList.remove('show');
       }
     });
 
@@ -844,15 +803,21 @@ function buildGrid(gridEl, products, strokeColor, baseFill) {
 }
 
 const HERO_PRODUCTS = [
+  { src: 'images/209795375-1-camel.avif', saved: false },
   { src: 'images/209919341-1-watercolourfloral.avif', saved: false },
-  { src: 'images/209795375-1-camel.avif',             saved: false },
   { src: 'images/209919327-1-pink.avif',              saved: false },
   { src: 'images/210077036-1-pink.avif',              saved: false },
   { src: 'images/210111316-1-blue.avif',              saved: false },
   { src: 'images/210372628-1-lightblue.avif',         saved: false },
 ];
 
-buildGrid(document.getElementById('hero-grid'), HERO_PRODUCTS, '#fff');
+const HERO_ROW_PRODUCTS = [
+  { src: 'images/209632433-1-pinkstripe.avif', saved: false },
+  { src: 'images/209604925-4.avif',            saved: false },
+];
+buildGrid(document.getElementById('grid-hero-row'), HERO_ROW_PRODUCTS);
+
+buildGrid(document.getElementById('hero-grid'), HERO_PRODUCTS);
 
 // Hero carousel
 const track    = document.getElementById('hero-grid');
@@ -871,14 +836,14 @@ function updateCarousel() {
 
 prevBtn.addEventListener('click', () => { if (heroIndex > 0) { heroIndex--; updateCarousel(); } });
 nextBtn.addEventListener('click', () => { if (heroIndex < maxIndex) { heroIndex++; updateCarousel(); } });
-buildGrid(document.getElementById('grid'),  PRODUCTS, '#fff');
+buildGrid(document.getElementById('grid'),  PRODUCTS);
 const PRODUCTS2 = [
-  { src: 'images/210606031-1-cream.avif', saved: false },
-  { src: 'images/209554508-1-softpink.avif',             saved: false },
-  { src: 'images/210282735-1-stripe.avif',            saved: false },
-  { src: 'images/209194028-1-grey.avif',         saved: false },
+  { src: 'images/210004615-2.avif', saved: false },
+  { src: 'images/210489078-2.avif',             saved: false },
+  { src: 'images/210469557-2.avif',            saved: false },
+  { src: 'images/209687105-2.avif',         saved: false },
 ];
-buildGrid(document.getElementById('grid2'), PRODUCTS2, '#2D2D2D', '#FFFFFF');
+buildGrid(document.getElementById('grid2'), PRODUCTS2);
 
 const HERO_PRODUCTS2 = [
   { src: 'images/210077036-1-pink.avif',         saved: false },
@@ -889,14 +854,14 @@ const HERO_PRODUCTS2 = [
   { src: 'images/210161655-2.avif',          saved: false },
 ];
 
-buildGrid(document.getElementById('hero-grid2'), HERO_PRODUCTS2, '#fff');
+buildGrid(document.getElementById('hero-grid2'), HERO_PRODUCTS2);
 const PRODUCTS3 = [
   { src: 'images/209664335-2.avif',         saved: false },
   { src: 'images/210074381-2.avif',      saved: false },
   { src: 'images/210089180-2.avif',        saved: false },
   { src: 'images/209919445-2.avif',          saved: false },
 ];
-buildGrid(document.getElementById('grid3'), PRODUCTS3, '#fff');
+buildGrid(document.getElementById('grid3'), PRODUCTS3);
 
 const track2   = document.getElementById('hero-grid2');
 const prevBtn2 = document.getElementById('hero-prev2');
@@ -912,6 +877,30 @@ function updateCarousel2() {
 
 prevBtn2.addEventListener('click', () => { if (heroIndex2 > 0) { heroIndex2--; updateCarousel2(); } });
 nextBtn2.addEventListener('click', () => { if (heroIndex2 < maxIndex2) { heroIndex2++; updateCarousel2(); } });
+
+// Trending category carousel
+const TRENDING_CAT = [
+  { src: 'images/210120713-1-blue.avif',   label: 'Essentials' },
+  { src: 'images/210373605-2.avif',        label: 'Denim Edit' },
+  { src: 'images/210473786-2.avif',        label: 'Footwear' },
+  { src: 'images/209664335-2.avif',        label: 'Knitwear' },
+  { src: 'images/209919445-2.avif',        label: 'Occasionwear' },
+];
+const trendingTrack = document.getElementById('trending-cat-track');
+TRENDING_CAT.forEach(item => {
+  const card = document.createElement('div');
+  card.className = 'trending-cat-card';
+  const img = document.createElement('img');
+  img.src = item.src;
+  img.alt = item.label;
+  img.loading = 'lazy';
+  const label = document.createElement('div');
+  label.className = 'trending-cat-label';
+  label.textContent = item.label;
+  card.appendChild(img);
+  card.appendChild(label);
+  trendingTrack.appendChild(card);
+});
 
 // Tabs
 const tabsEl = document.querySelector('.tabs');
